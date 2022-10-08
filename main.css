@@ -1,0 +1,77 @@
+.movie-text {
+  font-size: 14px;
+}
+
+.movie-img {
+  width: 100%;
+  height: 182px;
+}
+
+.rank,
+.year,
+.time {
+  display: flex;
+  align-items: center;
+}
+
+.rank::before,.modal-rank::before {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  content: "";
+  background-image: url("./images/star-icon.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.year::before, .modal-year::before {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  content: "";
+
+  background-image: url("./images/calendar-icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.time::before, .modal-time::before {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  content: "";
+
+  background-image: url("./images/clock-icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.movie-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000080;
+  backdrop-filter: blur(50px);
+}
+
+.modal-open {
+  display: flex;
+}
+
+.modal-inner {
+  background-color: #a3a375;
+}
