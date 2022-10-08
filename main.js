@@ -60,4 +60,5 @@ elList.addEventListener("click", function (evt) {
 elModalCloseBtn.addEventListener("click", function (evt) {
   evt.preventDefault();
   elModal.classList.remove("modal-open");
+  elModal.querySelector(".modal-iframe").src = "";
 });
