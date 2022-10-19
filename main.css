@@ -14,7 +14,8 @@
   align-items: center;
 }
 
-.rank::before,.modal-rank::before {
+.rank::before,
+.modal-rank::before {
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -25,7 +26,8 @@
   background-position: center;
 }
 
-.year::before, .modal-year::before {
+.year::before,
+.modal-year::before {
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -37,7 +39,8 @@
   background-position: center;
 }
 
-.time::before, .modal-time::before {
+.time::before,
+.modal-time::before {
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -74,4 +77,46 @@
 
 .modal-inner {
   background-color: #a3a375;
+}
+
+.search-input,
+.select-input,
+.to-input,
+.from-input,
+.sort-select {
+  width: 150px;
+}
+
+.bookmark-btn {
+  width: 25px;
+  height: 25px;
+  margin-top: 20px;
+  border: none;
+  background-color: transparent;
+  background-image: url("./images/bookmark.png");
+  background-position: center;
+  background-size: contain;
+}
+.bookmark-clicked {
+  background-image: url("./images/bookmark-yellow.png");
+}
+
+.bookmark-modal {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  color: white;
+  background-color: black;
+}
+
+.bookmark-open {
+  display: flex;
+}
+
+.bookmark-modal-close {
+  margin-top: auto;
 }
