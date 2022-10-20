@@ -24,14 +24,23 @@ const toHour = function (time) {
   return `${hour}hr, ${min}min`;
 };
 
-function renderUi(arr) {
+function renderUi(arr, word = "") {
   elList.innerHTML = "";
-
+  console.log(word);
   arr.forEach((item) => {
     const template = elTemplate.cloneNode(true);
 
     template.querySelector(".movie-img").src = item.youtubePoster;
-    template.querySelector(".movie-title").textContent = item.title;
+
+    if (word) {
+      template.querySelector(".movie-title").innerHTML = item.title.replace(
+        word,
+        `<mark class="p-0 bg-warning">${word.source}</mark>`
+      );
+    } else {
+      template.querySelector(".movie-title").textContent = item.title;
+    }
+
     template.querySelector(".rank").textContent = item.imdbRating;
     template.querySelector(".year").textContent = item.year;
     template.querySelector(".time").textContent = toHour(item.runtime);
@@ -122,25 +131,22 @@ elForm.addEventListener("submit", function (evt) {
   });
 
   if (searchedArr.length > 0) {
-    renderUi(searchedArr.slice(0, 101));
+    console.log(sortBy);
+    if (sortBy === "A>Z") {
+      sortAZ(searchedArr.slice(0, 101), regex);
+    } else if (sortBy === "Z<A") {
+      sortZA(searchedArr.slice(0, 101), regex);
+    } else if (sortBy === "highRate") {
+      highRate(searchedArr.slice(0, 101), regex);
+    } else if (sortBy === "lowRate") {
+      lowRate(searchedArr.slice(0, 101), regex);
+    }
   } else {
     alert("There is no film by this title");
   }
-
-  if (sortBy === "A>Z") {
-    sortAZ(searchedArr.slice(0, 101));
-  } else if (sortBy === "Z<A") {
-    sortZA(searchedArr.slice(0, 101));
-  } else if (sortBy === "highRate") {
-    highRate(searchedArr.slice(0, 101));
-  } else if (sortBy === "lowRate") {
-    lowRate(searchedArr.slice(0, 101));
-  } else if (sortBy === "No Rate") {
-    renderUi(arr);
-  }
 });
 
-function sortAZ(arr) {
+function sortAZ(arr, searchVal) {
   const sorted = arr.sort((a, b) => {
     if (a.title > b.title) {
       return 1;
@@ -150,10 +156,10 @@ function sortAZ(arr) {
       0;
     }
   });
-  renderUi(sorted);
+  renderUi(sorted, searchVal);
 }
 
-function sortZA(arr) {
+function sortZA(arr, searchVal) {
   const sorted = arr.sort((a, b) => {
     if (a.title > b.title) {
       return -1;
@@ -163,10 +169,10 @@ function sortZA(arr) {
       0;
     }
   });
-  renderUi(sorted);
+  renderUi(sorted, searchVal);
 }
 
-function lowRate(arr) {
+function lowRate(arr, searchVal) {
   const sorted = arr.sort((a, b) => {
     if (a.imdbRating > b.imdbRating) {
       return 1;
@@ -176,10 +182,10 @@ function lowRate(arr) {
       0;
     }
   });
-  renderUi(sorted);
+  renderUi(sorted, searchVal);
 }
 
-function highRate(arr) {
+function highRate(arr, searchVal) {
   const sorted = arr.sort((a, b) => {
     if (a.imdbRating > b.imdbRating) {
       return -1;
@@ -189,21 +195,25 @@ function highRate(arr) {
       0;
     }
   });
-  renderUi(sorted);
+  renderUi(sorted, searchVal);
 }
 
 const titleArr = [];
 
 function bookmark(id) {
   const bookMarkedItem = movies.find((item) => item.imdbId === id);
-  titleArr.push(bookMarkedItem.title);
+  const index = titleArr.indexOf(bookMarkedItem);
+  if (!titleArr.includes(bookMarkedItem.title)) {
+    titleArr.push(bookMarkedItem.title);
+  } else {
+    titleArr.splice(index, 1);
+  }
   elBookMarkBtn.textContent = `Bookmarked ${titleArr.length}`;
 }
 
 elBookMarkBtn.addEventListener("click", function () {
   elBookMarkModal.classList.add("bookmark-open");
   elBookMarkModalInner.innerHTML = "";
-  console.log(titleArr);
   titleArr.forEach((item, index) => {
     const newP = document.createElement("p");
     newP.textContent = `${index + 1}. ${item}`;
